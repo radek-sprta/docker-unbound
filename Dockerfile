@@ -9,6 +9,7 @@ FROM alpine:latest
 MAINTAINER Radek Sprta <mail@radeksprta.eu>
 
 EXPOSE 53
+EXPOSE 53/udp
 
 RUN apk add --update unbound
 
