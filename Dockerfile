@@ -11,13 +11,16 @@ MAINTAINER Radek Sprta <mail@radeksprta.eu>
 EXPOSE 53
 EXPOSE 53/udp
 
-RUN apk add --update unbound
+COPY --from=hints opennic.root /etc/unbound/opennic.root
+RUN apk add --update unbound && \
+    wget ftp://ftp.internic.net/domain/named.cache -O /etc/unbound/icann.root && \
+    unbound-anchor -a /etc/unbound/trusted-icann.key; true && \
+    unbound-anchor -a /etc/unbound/trusted-opennic.key -r /etc/unbound/opennic.root; true
 
 # Configuration
 COPY auth-zones.conf /etc/unbound/auth-zones.conf
 COPY forward-zones.conf /etc/unbound/forward-zones.conf
 COPY local-zones.conf /etc/unbound/local-zones.conf
-COPY --from=hints opennic.root /usr/share/dns-root-hints/opennic.root
 COPY unbound.conf /etc/unbound/unbound.conf
 
 COPY entrypoint.sh /entrypoint.sh
