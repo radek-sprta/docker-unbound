@@ -18,6 +18,7 @@ RUN apk add --update unbound && \
     unbound-anchor -a /etc/unbound/trusted-opennic.key -r /etc/unbound/opennic.root; true
 
 # Configuration
+COPY access-control.conf /etc/unbound/access-control.conf
 COPY auth-zones.conf /etc/unbound/auth-zones.conf
 COPY forward-zones.conf /etc/unbound/forward-zones.conf
 COPY local-zones.conf /etc/unbound/local-zones.conf
