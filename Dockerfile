@@ -14,6 +14,7 @@ EXPOSE 53/udp
 RUN apk add --update unbound
 
 # Configuration
+COPY auth-zones.conf /etc/unbound/auth-zones.conf
 COPY forward-zones.conf /etc/unbound/forward-zones.conf
 COPY local-zones.conf /etc/unbound/local-zones.conf
 COPY --from=hints opennic.root /usr/share/dns-root-hints/opennic.root
