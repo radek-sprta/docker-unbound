@@ -19,8 +19,8 @@ calculate_available_memory() {
   reserved=12582912
   available=$(free -b | grep Mem: | awk '{print $7}')
   if [ "${available}" -le $((reserved * 2)) ]; then
-      echo "Not enough memory" >&2
-      exit 1
+    echo "Not enough memory" >&2
+    exit 1
   fi
   echo $((available - reserved))
 }

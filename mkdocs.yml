@@ -1,0 +1,9 @@
+site_name: docker-unbound - Docker container to dump Unbound databases
+site_url: "https://radek-sprta.gitlab.io/docker-unbound"
+site_author: Radek Sprta
+theme: cinder
+pages:
+  - Home: index.md
+  - Contributing: contributing.md
+  - License: license.md
+repo_url: https://gitlab.com/radek-sprta/docker-unbound
