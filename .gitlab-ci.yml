@@ -1,0 +1,99 @@
+stages:
+  - lint
+  - build
+  - deploy
+  - docs
+
+lint:shellcheck:
+  image: koalaman/shellcheck-alpine:stable
+  stage: lint
+  script: shellcheck mariadb-backup.sh
+  only:
+    changes:
+      - '*.sh'
+
+pages:
+  image: python:latest
+  stage: docs
+  script:
+    - pip install mkdocs
+    - pip install mkdocs-cinder
+    - mkdocs build -d public/
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
+
+services:
+  - name: docker:dind
+    command: ["--experimental"]
+
+.build-setup:
+  before_script:
+    - mkdir -p ~/.docker/cli-plugins
+    - wget https://github.com/docker/buildx/releases/download/v0.3.1/buildx-v0.3.1.linux-amd64 -O ~/.docker/cli-plugins/docker-buildx
+    - chmod a+x ~/.docker/cli-plugins/docker-buildx
+    - docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+    - docker buildx create --use --driver docker-container
+    - echo "${CI_REGISTRY_PASSWORD}" | docker login -u "${CI_REGISTRY_USER}" --password-stdin "${CI_REGISTRY}"
+    - echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin docker.io
+    - export BUILD_DATE="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+    - export VCS_REF="$(git describe --tags --always --dirty)"
+
+.build:
+  image: docker:stable-git
+  stage: build
+  script:
+    - docker buildx build --platform ${PLATFORM} --tag unbound --cache-to type=local,dest=.cache/${PLATFORM} --load .
+    - docker run --rm -d --name unbound unbound
+    - docker stop unbound
+  artifacts:
+    paths:
+      - .cache
+    expire_in: 1 hour
+
+linux/amd64:
+  extends:
+    - .build
+    - .build-setup
+  variables:
+    PLATFORM: linux/amd64
+
+linux/arm64:
+  extends:
+    - .build
+    - .build-setup
+  variables:
+    PLATFORM: linux/arm64
+
+linux/arm/v7:
+  extends:
+    - .build
+    - .build-setup
+  variables:
+    PLATFORM: linux/arm/v7
+
+linux/arm/v6:
+  extends:
+    - .build
+    - .build-setup
+  variables:
+    PLATFORM: linux/arm/v6
+
+deploy:
+  stage: deploy
+  script:
+    - |
+      docker buildx build . --push --platform linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6 \
+      --cache-from type=local,src=.cache/linux/amd64 \
+      --cache-from type=local,src=.cache/linux/arm64 \
+      --cache-from type=local,src=.cache/linux/arm/v7 \
+      --cache-from type=local,src=.cache/linux/arm/v6 \
+      --label "org.opencontainers.image.created=${BUILD_DATE}" \
+      --label "org.opencontainers.image.revision=${VCS_REF}" \
+      --tag ${CI_REGISTRY_IMAGE}:latest \
+      --tag ${DOCKERHUB_USERNAME}/${DOCKERHUB_REPOSITORY}:latest
+    - docker run -v ${PWD}:/workspace -e DOCKERHUB_USERNAME -e DOCKERHUB_PASSWORD -e DOCKERHUB_REPOSITORY -e README_FILEPATH=/workspace/README.md peterevans/dockerhub-description
+  only:
+    - master
