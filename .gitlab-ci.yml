@@ -82,6 +82,7 @@ linux/arm/v6:
     PLATFORM: linux/arm/v6
 
 deploy:
+  image: docker:stable-git
   stage: deploy
   script:
     - |
