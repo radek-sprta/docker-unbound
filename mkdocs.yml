@@ -1,4 +1,4 @@
-site_name: docker-unbound - Docker container to dump Unbound databases
+site_name: rsprta/unbound
 site_url: "https://radek-sprta.gitlab.io/docker-unbound"
 site_author: Radek Sprta
 theme: cinder
