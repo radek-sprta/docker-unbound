@@ -8,13 +8,13 @@ RUN apk add --update bind-tools && \
 FROM alpine:latest
 MAINTAINER Radek Sprta <mail@radeksprta.eu>
 
-LABEL org.label-schema.description = "Unbound DNS server. It can run as resolver or a simple authoritative server."
-LABEL org.label-schema.docker.cmd = "docker run --name unbound -d -p 53:53 -p 53:53/udp --restart=unless-stopped rsprta/unbound:latest"
-LABEL org.label-schema.name = "unbound"
-LABEL org.label-schema.schema-version = "1.0"
-LABEL org.label-schema.url = "https://nlnetlabs.nl/projects/unbound/about/"
-LABEL org.label-schema.usage = "https://gitlab.com/radek-sprta/docker-unbound/-/blob/master/README.md"
-LABEL org.label-schema.vendor = "Radek Sprta"
+LABEL org.opencontainers.image.authors "Radek Sprta <mail@radeksprta.eu>"
+LABEL org.opencontainers.image.description "Unbound DNS server. It can run as resolver or a simple authoritative server."
+LABEL org.opencontainers.image.documentation "https://radek-sprta.gitlab.io/docker-unbound"
+LABEL org.opencontainers.image.licenses "GPL-3.0"
+LABEL org.opencontainers.image.source "https://gitlab.com/radek-sprta/docker-unbound"
+LABEL org.opencontainers.image.title "rsprta/unbound"
+LABEL org.opencontainers.image.url "https://gitlab.com/radek-sprta/docker-unbound"
 
 EXPOSE 53
 EXPOSE 53/udp
