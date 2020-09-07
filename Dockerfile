@@ -19,11 +19,15 @@ LABEL org.opencontainers.image.url "https://gitlab.com/radek-sprta/docker-unboun
 EXPOSE 53
 EXPOSE 53/udp
 
+HEALTHCHECK --interval=10s --retries=3 --start-period=10s \
+    CMD nslookup duckduckgo.com 127.0.0.1
+
 COPY --from=hints opennic.root /etc/unbound/opennic.root
 RUN apk add --update unbound && \
     wget ftp://ftp.internic.net/domain/named.cache -O /etc/unbound/icann.root && \
     unbound-anchor -a /etc/unbound/trusted-icann.key; true && \
-    unbound-anchor -a /etc/unbound/trusted-opennic.key -r /etc/unbound/opennic.root; true
+    unbound-anchor -a /etc/unbound/trusted-opennic.key -r /etc/unbound/opennic.root; true && \
+    chown -R unbound:unbound /etc/unbound
 
 # Configuration
 COPY config/access-control.conf /etc/unbound/access-control.conf
