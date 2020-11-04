@@ -45,4 +45,3 @@ Maintainer
 
 [googlestyle]: https://google.github.io/styleguide/shellguide.html
 [mergetutorial]: https://docs.gitlab.com/ee/gitlab-basics/add-merge-request.html
-

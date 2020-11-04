@@ -35,7 +35,7 @@ However, in default configuration, it is not too useful. But you can overwrite s
 volumes and environmental variables.
 
 ### Resolving local domains
-If you want Unbound to resolve a local domain (such as `.local` or `.lan`), you can achieve that by 
+If you want Unbound to resolve a local domain (such as `.local` or `.lan`), you can achieve that by
 providing `local-zones.conf` file. The contents should look like this:
 
 ```yaml
@@ -162,7 +162,7 @@ Verbosity level. Defaults to 0 (least verbose).
 For information on how to contribute to the project, please check the [Contributor's Guide][contributing].
 
 ## Contact
-[mail@radeksprta.eu](mailto:mail@radeksprta.eu)  
+[mail@radeksprta.eu](mailto:mail@radeksprta.eu)
 [incoming+radek-sprta/docker-unbound@gitlab.com](incoming+radek-sprta/docker-unbound@gitlab.com)
 
 ## License
@@ -171,10 +171,10 @@ GNU General Public License v3
 ## Credits
 The container was heavily inspired by:
 
-- [mvance/unbound](https://hub.docker.com/r/mvance/unbound)  
+- [mvance/unbound](https://hub.docker.com/r/mvance/unbound)
 - [secns/unbound](https://hub.docker.com/r/secns/unbound)
 
-Multi-arch builds are copied from:  
+Multi-arch builds are copied from:
 [klutchell/unbound](https://hub.docker.com/r/klutchell/unbound)
 
 This package was created with [Cookiecutter][cookiecutter].

@@ -1,6 +1,16 @@
+---
 repos:
   - repo: https://github.com/jumanjihouse/pre-commit-hooks
     rev: master
     hooks:
       - id: shfmt
         args: ["-ci", "-i 2", "-w"]
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: master
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+  - repo: https://github.com/pryorda/dockerfilelint-precommit-hooks
+    rev: master
+    hooks:
+      - id: dockerfilelint
