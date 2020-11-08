@@ -10,6 +10,10 @@ repos:
     hooks:
       - id: end-of-file-fixer
       - id: trailing-whitespace
+  - repo: https://gitlab.com/devopshq/gitlab-ci-linter
+    rev: master
+    hooks:
+      - id: gitlab-ci-linter
   - repo: https://github.com/pryorda/dockerfilelint-precommit-hooks
     rev: master
     hooks:
