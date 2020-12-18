@@ -1,4 +1,4 @@
-# unbound
+# unbound [![Docker Image Size (latest semver)](https://img.shields.io/docker/image-size/rsprta/unbound)](https://hub.docker.com/r/rsprta/unbound) [![Docker Pulls](https://img.shields.io/docker/pulls/rsprta/unbound)](https://hub.docker.com/r/rsprta/unbound) [![Pipeline status](https://gitlab.com/radek-sprta/docker-unbound/badges/master/pipeline.svg)](https://gitlab.com/radek-sprta/docker-unbound/commits/master)
 
 ## Quick reference
 -	**Maintained by**: [Radek Sprta](https://gitlab.com/radek-sprta)
