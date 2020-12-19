@@ -1,7 +1,7 @@
 # Get OpenNIC root hints
 FROM alpine:3 AS hints
 RUN apk add --no-cache --update bind-tools && \
-    dig . NS @45.56.115.189 > opennic.root
+    dig . NS @168.119.153.26 > opennic.root
 
 # Main image
 FROM alpine:3
