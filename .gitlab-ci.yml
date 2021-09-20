@@ -7,7 +7,7 @@ stages:
 lint:shellcheck:
   image: koalaman/shellcheck-alpine:stable
   stage: lint
-  script: shellcheck mariadb-backup.sh
+  script: shellcheck entrypoint.sh
   only:
     changes:
       - '*.sh'
