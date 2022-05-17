@@ -2,7 +2,7 @@ site_name: rsprta/unbound
 site_url: "https://radek-sprta.gitlab.io/docker-unbound"
 site_author: Radek Sprta
 theme: cinder
-pages:
+nav:
   - Home: index.md
   - Contributing: contributing.md
   - License: license.md
