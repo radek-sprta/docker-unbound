@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.4
 # Get OpenNIC root hints
 FROM alpine:3 AS hints
 RUN apk add --no-cache --update bind-tools && \
@@ -21,7 +22,7 @@ EXPOSE 53/udp
 HEALTHCHECK --interval=10s --timeout=5s --retries=3 --start-period=10s \
     CMD nslookup duckduckgo.com 127.0.0.1 || exit 1
 
-COPY --from=hints opennic.root /etc/unbound/opennic.root
+COPY --from=hints --link opennic.root /etc/unbound/opennic.root
 RUN apk add --no-cache --update unbound && \
     wget ftp://ftp.internic.net/domain/named.cache -O /etc/unbound/icann.root && \
     unbound-anchor -a /etc/unbound/trusted-icann.key; true && \
@@ -29,11 +30,11 @@ RUN apk add --no-cache --update unbound && \
     chown -R unbound:unbound /etc/unbound
 
 # Configuration
-COPY config/access-control.conf /etc/unbound/access-control.conf
-COPY config/auth-zones.conf /etc/unbound/auth-zones.conf
-COPY config/forward-zones.conf /etc/unbound/forward-zones.conf
-COPY config/local-zones.conf /etc/unbound/local-zones.conf
-COPY config/unbound.conf /etc/unbound/unbound.conf
+COPY --link config/access-control.conf /etc/unbound/access-control.conf
+COPY --link config/auth-zones.conf /etc/unbound/auth-zones.conf
+COPY --link config/forward-zones.conf /etc/unbound/forward-zones.conf
+COPY --link config/local-zones.conf /etc/unbound/local-zones.conf
+COPY --link config/unbound.conf /etc/unbound/unbound.conf
 
-COPY entrypoint.sh /entrypoint.sh
+COPY --link entrypoint.sh /entrypoint.sh
 CMD ["/entrypoint.sh"]
