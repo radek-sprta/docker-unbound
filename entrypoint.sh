@@ -33,7 +33,7 @@ MSG_CACHE_SIZE=$(($(calculate_available_memory) / 6))
 
 # Configurable variables
 CACHE_MIN_TTL=${CACHE_MIN_TTL:-0}
-DO_IPV6=${DO_IPV6:-yes}
+DO_IPV6=${DO_IPV6:-no}
 DO_IPV4=${DO_IPV4:-yes}
 DO_UDP=${DO_UDP:-yes}
 DO_TCP=${DO_TCP:-yes}
