@@ -26,8 +26,7 @@ COPY --from=hints --link opennic.root /etc/unbound/opennic.root
 RUN apk add --no-cache --update unbound && \
     wget ftp://ftp.internic.net/domain/named.cache -O /etc/unbound/icann.root && \
     unbound-anchor -a /etc/unbound/trusted-icann.key; true && \
-    unbound-anchor -a /etc/unbound/trusted-opennic.key -r /etc/unbound/opennic.root; true && \
-    chown -R unbound:unbound /etc/unbound
+    unbound-anchor -a /etc/unbound/trusted-opennic.key -r /etc/unbound/opennic.root; true
 
 # Configuration
 COPY --link config/access-control.conf /etc/unbound/access-control.conf
@@ -35,6 +34,8 @@ COPY --link config/auth-zones.conf /etc/unbound/auth-zones.conf
 COPY --link config/forward-zones.conf /etc/unbound/forward-zones.conf
 COPY --link config/local-zones.conf /etc/unbound/local-zones.conf
 COPY --link config/unbound.conf /etc/unbound/unbound.conf
+
+RUN chown -R unbound:unbound /etc/unbound
 
 COPY --link entrypoint.sh /entrypoint.sh
 CMD ["/entrypoint.sh"]
