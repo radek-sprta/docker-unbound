@@ -18,6 +18,7 @@ LABEL org.opencontainers.image.url="https://gitlab.com/radek-sprta/docker-unboun
 
 EXPOSE 53
 EXPOSE 53/udp
+EXPOSE 8953
 
 HEALTHCHECK --interval=10s --timeout=5s --retries=3 --start-period=10s \
     CMD nslookup duckduckgo.com 127.0.0.1 || exit 1
