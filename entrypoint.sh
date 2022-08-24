@@ -38,6 +38,7 @@ DO_IPV4=${DO_IPV4:-yes}
 DO_UDP=${DO_UDP:-yes}
 DO_TCP=${DO_TCP:-yes}
 RATELIMIT=${RATELIMIT:-0}
+REMOTECONTROL=${REMOTECONTROL:-no}
 ROOT_HINTS=${ROOT_HINTS:-icann}
 SO_REUSEPORT=${SO_REUSEPORT:-yes}
 SERVE_EXPIRED=${SERVE_EXPIRED:-yes}
@@ -56,6 +57,7 @@ sed 's/{{EXTENDED_STATISTICS}}/'"${EXTENDED_STATISTICS}"'/' -i /etc/unbound/unbo
 sed 's/{{MSG_CACHE_SIZE}}/'"${MSG_CACHE_SIZE}"'/' -i /etc/unbound/unbound.conf
 sed 's/{{NUM_THREADS}}/'"${NUM_THREADS}"'/' -i /etc/unbound/unbound.conf
 sed 's/{{RATELIMIT}}/'"${RATELIMIT}"'/' -i /etc/unbound/unbound.conf
+sed 's/{{REMOTECONTROL}}/'"${REMOTECONTROL}"'/' -i /etc/unbound/unbound.conf
 sed 's/{{ROOT_HINTS}}/'"${ROOT_HINTS}"'/' -i /etc/unbound/unbound.conf
 sed 's/{{RRSET_CACHE_SIZE}}/'"${RRSET_CACHE_SIZE}"'/' -i /etc/unbound/unbound.conf
 sed 's/{{SERVE_EXPIRED}}/'"${SERVE_EXPIRED}"'/' -i /etc/unbound/unbound.conf
