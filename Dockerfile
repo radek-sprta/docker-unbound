@@ -23,11 +23,11 @@ HEALTHCHECK --interval=10s --timeout=5s --retries=3 --start-period=10s \
     CMD nslookup duckduckgo.com 127.0.0.1 || exit 1
 
 COPY --from=hints --link opennic.root /etc/unbound/opennic.root
-RUN apk add --no-cache --update unbound && \
-    unbound-control-setup && \
+RUN apk add --no-cache --update unbound openssl && \
     wget ftp://ftp.internic.net/domain/named.cache -O /etc/unbound/icann.root && \
     unbound-anchor -a /etc/unbound/trusted-icann.key; true && \
-    unbound-anchor -a /etc/unbound/trusted-opennic.key -r /etc/unbound/opennic.root; true
+    unbound-anchor -a /etc/unbound/trusted-opennic.key -r /etc/unbound/opennic.root; true && \
+    unbound-control-setup
 
 # Configuration
 COPY --link config/access-control.conf /etc/unbound/access-control.conf
