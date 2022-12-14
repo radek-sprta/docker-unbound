@@ -33,22 +33,28 @@ MSG_CACHE_SIZE=$(($(calculate_available_memory) / 6))
 
 # Configurable variables
 CACHE_MIN_TTL=${CACHE_MIN_TTL:-0}
-DO_IPV6=${DO_IPV6:-no}
+CONTROL_CERT=${CONTROL_CERT:-/etc/unbound/unbound_control.pem}
+CONTROL_KEY=${CONTROL_KEY:-/etc/unbound/unbound_control.key}
 DO_IPV4=${DO_IPV4:-yes}
-DO_UDP=${DO_UDP:-yes}
+DO_IPV6=${DO_IPV6:-no}
 DO_TCP=${DO_TCP:-yes}
+DO_UDP=${DO_UDP:-yes}
+EXTENDED_STATISTICS=${EXTENDED_STATISTICS:-no}
 RATELIMIT=${RATELIMIT:-0}
 REMOTECONTROL=${REMOTECONTROL:-no}
 ROOT_HINTS=${ROOT_HINTS:-icann}
-SO_REUSEPORT=${SO_REUSEPORT:-yes}
+SERVER_CERT=${SERVER_CERT:-/etc/unbound/unbound_server.pem}
+SERVER_KEY=${SERVER_KEY:-/etc/unbound/unbound_server.key}
 SERVE_EXPIRED=${SERVE_EXPIRED:-yes}
-STATISTICS_INTERVAL=${STATISTICS_INTERVAL:-0}
+SO_REUSEPORT=${SO_REUSEPORT:-yes}
 STATISTICS_CUMULATIVE=${STATISTICS_CUMULATIVE:-no}
-EXTENDED_STATISTICS=${EXTENDED_STATISTICS:-no}
+STATISTICS_INTERVAL=${STATISTICS_INTERVAL:-0}
 VERBOSITY=${VERBOSITY:-0}
 
 sed 's/{{CACHE_MIN_TTL}}/'"${CACHE_MIN_TTL}"'/' -i /etc/unbound/unbound.conf
 sed 's/{{CACHE_SLABS}}/'"${CACHE_SLABS}"'/' -i /etc/unbound/unbound.conf
+sed 's#{{CONTROL_CERT}}#'"${CONTROL_CERT}"'#' -i /etc/unbound/unbound.conf
+sed 's#{{CONTROL_KEY}}#'"${CONTROL_KEY}"'#' -i /etc/unbound/unbound.conf
 sed 's/{{DO_IPV4}}/'"${DO_IPV4}"'/' -i /etc/unbound/unbound.conf
 sed 's/{{DO_IPV6}}/'"${DO_IPV6}"'/' -i /etc/unbound/unbound.conf
 sed 's/{{DO_TCP}}/'"${DO_TCP}"'/' -i /etc/unbound/unbound.conf
@@ -60,6 +66,8 @@ sed 's/{{RATELIMIT}}/'"${RATELIMIT}"'/' -i /etc/unbound/unbound.conf
 sed 's/{{REMOTECONTROL}}/'"${REMOTECONTROL}"'/' -i /etc/unbound/unbound.conf
 sed 's/{{ROOT_HINTS}}/'"${ROOT_HINTS}"'/' -i /etc/unbound/unbound.conf
 sed 's/{{RRSET_CACHE_SIZE}}/'"${RRSET_CACHE_SIZE}"'/' -i /etc/unbound/unbound.conf
+sed 's#{{SERVER_CERT}}#'"${SERVER_CERT}"'#' -i /etc/unbound/unbound.conf
+sed 's#{{SERVER_KEY}}#'"${SERVER_KEY}"'#' -i /etc/unbound/unbound.conf
 sed 's/{{SERVE_EXPIRED}}/'"${SERVE_EXPIRED}"'/' -i /etc/unbound/unbound.conf
 sed 's/{{SO_REUSEPORT}}/'"${SO_REUSEPORT}"'/' -i /etc/unbound/unbound.conf
 sed 's/{{STATISTICS_CUMULATIVE}}/'"${STATISTICS_CUMULATIVE}"'/' -i /etc/unbound/unbound.conf
