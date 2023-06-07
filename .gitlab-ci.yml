@@ -38,12 +38,14 @@ build:
       upload "${VERSION}" "${PLATFORMS}"
 
 scan:
+  extends:
+    - .matrix
   image:
     name: aquasec/trivy
     entrypoint: [""]
   stage: test
   script:
-    - just scan "${CI_REGISTRY_IMAGE}"
+    - just scan "${CI_REGISTRY_IMAGE}:${VERSION}"
 
 deploy:
   extends:
